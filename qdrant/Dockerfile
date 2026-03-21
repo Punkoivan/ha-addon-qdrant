@@ -1,4 +1,16 @@
+# Global ARG — must be before any FROM to be usable in FROM instructions
 ARG BUILD_FROM=qdrant/qdrant:v1.17.0
+
+# Stage 1: fetch static gosu binary
+FROM debian:12-slim AS tools
+ARG TARGETARCH
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends wget ca-certificates \
+    && wget -q -O /tmp/gosu "https://github.com/tianon/gosu/releases/download/1.17/gosu-${TARGETARCH}" \
+    && chmod +x /tmp/gosu \
+    && rm -rf /var/lib/apt/lists/*
+
+# Stage 2: addon image based on official qdrant
 FROM ${BUILD_FROM}
 
 ARG BUILD_ARCH
@@ -23,11 +35,9 @@ LABEL \
     org.opencontainers.image.revision="${BUILD_REF}" \
     org.opencontainers.image.version="${BUILD_VERSION}"
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends gosu jq \
-    && rm -rf /var/lib/apt/lists/* \
-    && id qdrant || adduser --disabled-password --gecos "" --no-create-home qdrant
+USER root
 
+COPY --from=tools /tmp/gosu /usr/local/bin/gosu
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
