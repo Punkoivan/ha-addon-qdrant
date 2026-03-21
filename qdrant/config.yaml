@@ -22,4 +22,4 @@ schema:
   log_level: list(debug|info|warn|error)
   api_key: str
   read_only_api_key: str
-image: ghcr.io/punkoivan/ha-addon-qdrant/qdrant
+image: ghcr.io/punkoivan/ha-addon-qdrant/qdrant-{arch}
