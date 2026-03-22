@@ -30,8 +30,25 @@ Leave empty to disable read-only key.
 | 6333 | TCP      | Qdrant REST API     |
 | 6334 | TCP      | Qdrant gRPC API     |
 
+## TLS
+
+### `tls`
+Enable TLS for the Qdrant REST and gRPC APIs. Default: `false`.
+
+### `certfile`
+Certificate filename inside `/ssl/` (e.g. `ha.punka.space.crt`).
+Required when `tls: true`.
+
+### `keyfile`
+Private key filename inside `/ssl/`. Optional — if not set, derived automatically
+from `certfile` by replacing the extension with `.key`
+(e.g. `ha.punka.space.crt` → `ha.punka.space.key`).
+
+When TLS is enabled, clients must connect via `https://` on port 6333.
+
 ## Security Notes
 
-- The Qdrant process runs as a non-root user (`qdrant`) inside the container.
+- The Qdrant process runs as a non-root user (`nobody`) inside the container.
 - If your Home Assistant is accessible from the internet, always set an `api_key`.
 - The add-on does **not** mount `/share` or any other shared directory.
+- TLS certificates are copied from `/ssl/` to the add-on's private storage at startup.
