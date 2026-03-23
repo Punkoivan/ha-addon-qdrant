@@ -1,0 +1,21 @@
+# Changelog
+
+## 1.1.0
+
+- Added optional TLS support via `/ssl/` certificates
+- New options: `certfile`, `keyfile`, `tls`
+
+## 1.0.2
+
+- Fixed `{arch}` placeholder in image name for HA Supervisor
+
+## 1.0.1
+
+- Fixed: run as `nobody` user for better security
+- Fixed: options parsing via grep/cut (no jq dependency)
+
+## 1.0.0
+
+- Initial release: Qdrant v1.17.0
+- Options: `log_level`, `api_key`, `read_only_api_key`
+- Ports: 6333 (REST API), 6334 (gRPC)
