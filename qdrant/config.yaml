@@ -15,7 +15,8 @@ ports_description:
   6333/tcp: Qdrant REST API
   6334/tcp: Qdrant gRPC API
 map:
-  - ssl:ro
+  - type: ssl
+    read_only: true
 options:
   log_level: info
   api_key: ""
