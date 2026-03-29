@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.2
+- Fixed TLS option mounts.
+
+## 1.1.1
+- Intermediate version, actually skipped
+
 ## 1.1.0
 
 - Added optional TLS support via `/ssl/` certificates

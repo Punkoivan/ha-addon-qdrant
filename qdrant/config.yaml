@@ -1,5 +1,5 @@
 name: Qdrant
-version: "1.1.0"
+version: "1.1.2"
 slug: qdrant
 description: Qdrant vector database — local vector search for AI and RAG applications
 url: https://github.com/punkoivan/ha-addon-qdrant
