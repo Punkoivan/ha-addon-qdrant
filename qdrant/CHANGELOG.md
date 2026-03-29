@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.3
+
+- Added `certcontent` and `keycontent` options — paste base64-encoded PEM directly in the UI as an alternative to `certfile`/`keyfile`
+
 ## 1.1.2
 - Fixed TLS option mounts.
 

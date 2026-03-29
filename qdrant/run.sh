@@ -29,6 +29,8 @@ READ_ONLY_API_KEY=$(get_option "read_only_api_key" "")
 TLS=$(get_bool "tls" "false")
 CERTFILE=$(get_option "certfile" "")
 KEYFILE=$(get_option "keyfile" "")
+CERTCONTENT=$(get_option "certcontent" "")
+KEYCONTENT=$(get_option "keycontent" "")
 
 export QDRANT__STORAGE__STORAGE_PATH="/data/storage"
 export QDRANT__LOG_LEVEL="$LOG_LEVEL"
@@ -43,14 +45,22 @@ if [ -n "$READ_ONLY_API_KEY" ]; then
     export QDRANT__SERVICE__READ_ONLY_API_KEY="$READ_ONLY_API_KEY"
 fi
 
-if [ "$TLS" = "true" ] && [ -n "$CERTFILE" ]; then
-    # Derive key filename from cert if not specified (replace extension with .key)
-    if [ -z "$KEYFILE" ]; then
-        KEYFILE="${CERTFILE%.*}.key"
+if [ "$TLS" = "true" ]; then
+    if [ -n "$CERTCONTENT" ] && [ -n "$KEYCONTENT" ]; then
+        # Decode base64 content directly into /data
+        echo "$CERTCONTENT" | base64 -d > /data/tls.crt
+        echo "$KEYCONTENT" | base64 -d > /data/tls.key
+    elif [ -n "$CERTFILE" ]; then
+        # Derive key filename from cert if not specified (replace extension with .key)
+        if [ -z "$KEYFILE" ]; then
+            KEYFILE="${CERTFILE%.*}.key"
+        fi
+        cp "/ssl/${CERTFILE}" /data/tls.crt
+        cp "/ssl/${KEYFILE}" /data/tls.key
+    else
+        echo "TLS enabled but no certificate provided (set certcontent/keycontent or certfile/keyfile)" >&2
+        exit 1
     fi
-    # Copy to /data so nobody can read them
-    cp "/ssl/${CERTFILE}" /data/tls.crt
-    cp "/ssl/${KEYFILE}" /data/tls.key
     chown nobody:nogroup /data/tls.crt /data/tls.key
     chmod 400 /data/tls.crt /data/tls.key
     export QDRANT__SERVICE__ENABLE_TLS=true

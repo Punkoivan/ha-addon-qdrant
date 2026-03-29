@@ -1,5 +1,5 @@
 name: Qdrant
-version: "1.1.2"
+version: "1.1.3"
 slug: qdrant
 description: Qdrant vector database — local vector search for AI and RAG applications
 url: https://github.com/punkoivan/ha-addon-qdrant
@@ -24,6 +24,8 @@ options:
   tls: false
   certfile: ""
   keyfile: ""
+  certcontent: ""
+  keycontent: ""
 schema:
   log_level: list(debug|info|warn|error)
   api_key: str
@@ -31,4 +33,6 @@ schema:
   tls: bool
   certfile: str
   keyfile: str
+  certcontent: str
+  keycontent: str
 image: ghcr.io/punkoivan/ha-addon-qdrant/qdrant-{arch}
