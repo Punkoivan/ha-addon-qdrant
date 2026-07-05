@@ -1,5 +1,5 @@
 # Global ARG — must be before any FROM to be usable in FROM instructions
-ARG BUILD_FROM=qdrant/qdrant:v1.17.0
+ARG BUILD_FROM=qdrant/qdrant:v1.18.2
 
 # Stage 1: fetch static gosu binary
 FROM debian:12-slim AS tools
