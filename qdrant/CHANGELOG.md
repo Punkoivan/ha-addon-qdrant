@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.5
+
+- Bumped Qdrant to v1.19.1 (from v1.18.2)
+
 ## 1.1.4
 
 - Bumped Qdrant to v1.18.2 (from v1.17.0)
